@@ -1,0 +1,16 @@
+#query health($name: Bytes) {
+query health($name: String!) {
+    #    indexingStatusForCurrentVersion(subgraphName: $name, subgraphError: allow) {
+    indexingStatusForCurrentVersion(subgraphName: $name) {
+        synced
+        health
+        chains {
+            chainHeadBlock {
+                number
+            }
+            latestBlock {
+                number
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+# ${block !== undefined ? `block: { number: ${block}}` : ``}
+#number = 1
+query uniswapFactories {
+    factories(
+    block: { number: 1 }
+    first: 1, subgraphError: allow) {
+    txCount
+    totalVolumeUSD
+    totalFeesUSD
+    totalValueLockedUSD
+}
+}

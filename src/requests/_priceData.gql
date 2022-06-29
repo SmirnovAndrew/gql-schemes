@@ -1,0 +1,16 @@
+#query tokenHourDatas($startTime: Int!, $skip: Int!, $address: Bytes!) {
+query tokenHourDatas($startTime: Int!, $skip: Int!, $address: String!) {
+    tokenHourDatas(
+        first: 100
+        skip: $skip
+        where: { token: $address, periodStartUnix_gt: $startTime }
+        orderBy: periodStartUnix
+        orderDirection: asc
+    ) {
+        periodStartUnix
+        high
+        low
+        open
+        close
+    }
+}

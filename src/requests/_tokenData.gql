@@ -1,0 +1,15 @@
+#TOKENS_BULK(1,['string1','string2'])
+query tokens {
+    tokens(where: {id_in: ["string1","string2",]},block: {number: 1} , orderBy: totalValueLockedUSD, orderDirection: desc, subgraphError: allow) {
+        id
+        symbol
+        name
+        derivedETH
+        volumeUSD
+        volume
+        txCount
+        totalValueLocked
+        feesUSD
+        totalValueLockedUSD
+    }
+}

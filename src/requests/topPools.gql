@@ -1,0 +1,5 @@
+query topPools {
+    pools(first: 50, orderBy: totalValueLockedUSD, orderDirection: desc, subgraphError: allow) {
+        id
+    }
+}

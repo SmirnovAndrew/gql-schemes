@@ -1,0 +1,30 @@
+query tokensSearch($value: String, $id: ID) {
+    asSymbol: tokens(
+        where: { symbol_contains: $value }
+        orderBy: totalValueLockedUSD
+        orderDirection: desc
+        subgraphError: allow
+    ) {
+        id
+        symbol
+        name
+        totalValueLockedUSD
+    }
+    asName: tokens(
+        where: { name_contains: $value }
+        orderBy: totalValueLockedUSD
+        orderDirection: desc
+        subgraphError: allow
+    ) {
+        id
+        symbol
+        name
+        totalValueLockedUSD
+    }
+    asAddress: tokens(where: { id: $id }, orderBy: totalValueLockedUSD, orderDirection: desc, subgraphError: allow) {
+        id
+        symbol
+        name
+        totalValueLockedUSD
+    }
+}

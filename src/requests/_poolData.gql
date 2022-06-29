@@ -1,0 +1,31 @@
+#POOLS_BULK(1,['string1','string2'])
+query pools {
+    pools(where: {id_in: ["string1","string2",]},block: {number: 1} , orderBy: totalValueLockedUSD, orderDirection: desc, subgraphError: allow) {
+        id
+        feeTier
+        liquidity
+        sqrtPrice
+        tick
+        token0 {
+            id
+            symbol
+            name
+            decimals
+            derivedETH
+        }
+        token1 {
+            id
+            symbol
+            name
+            decimals
+            derivedETH
+        }
+        token0Price
+        token1Price
+        volumeUSD
+        txCount
+        totalValueLockedToken0
+        totalValueLockedToken1
+        totalValueLockedUSD
+    }
+}

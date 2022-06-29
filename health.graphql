@@ -1,0 +1,150 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+}
+
+interface ChainIndexingStatus {
+    chainHeadBlock: Block
+    earliestBlock: Block
+    lastHealthyBlock: Block
+    latestBlock: Block
+    network: String!
+}
+
+type Block {
+    hash: Bytes!
+    number: BigInt!
+}
+
+type CachedEthereumCall {
+    block: Block!
+    contractAddress: Bytes!
+    idHash: Bytes!
+    returnValue: Bytes!
+}
+
+type EntityChanges {
+    deletions: [EntityTypeDeletions!]!
+    updates: [EntityTypeUpdates!]!
+}
+
+type EntityTypeDeletions {
+    entities: [ID!]!
+    type: String!
+}
+
+type EntityTypeUpdates {
+    entities: [JSONObject!]!
+    type: String!
+}
+
+type EthereumIndexingStatus implements ChainIndexingStatus {
+    chainHeadBlock: Block
+    earliestBlock: Block
+    lastHealthyBlock: Block
+    latestBlock: Block
+    network: String!
+}
+
+type PartialBlock {
+    hash: Bytes
+    number: BigInt!
+}
+
+type ProofOfIndexingResult {
+    block: Block!
+    deployment: String!
+    "There may not be a proof of indexing available for the deployment and block"
+    proofOfIndexing: Bytes
+}
+
+type PublicProofOfIndexingResult {
+    block: PartialBlock!
+    deployment: String!
+    proofOfIndexing: Bytes!
+}
+
+type Query {
+    blockData(blockHash: Bytes!, network: String!): JSONObject
+    cachedEthereumCalls(blockHash: Bytes!, network: String!): [CachedEthereumCall!]
+    entityChangesInBlock(blockNumber: Int!, subgraphId: String!): EntityChanges!
+    indexingStatusForCurrentVersion(subgraphName: String!): SubgraphIndexingStatus
+    indexingStatusForPendingVersion(subgraphName: String!): SubgraphIndexingStatus
+    indexingStatuses(subgraphs: [String!]): [SubgraphIndexingStatus!]!
+    indexingStatusesForSubgraphName(subgraphName: String!): [SubgraphIndexingStatus!]!
+    proofOfIndexing(blockHash: Bytes!, blockNumber: Int!, indexer: Bytes, subgraph: String!): Bytes
+    """
+
+    Proofs of indexing for several deployments and blocks that can be shared and
+    compared in public without revealing the _actual_ proof of indexing that every
+    indexer has in their database
+    """
+    publicProofsOfIndexing(requests: [PublicProofOfIndexingRequest!]!): [PublicProofOfIndexingResult!]!
+    subgraphFeatures(subgraphId: String!): SubgraphFeatures!
+}
+
+type SubgraphError {
+    block: Block
+    deterministic: Boolean!
+    handler: String
+    message: String!
+}
+
+type SubgraphFeatures {
+    errors: [String!]!
+    features: [Feature!]!
+    network: String
+}
+
+type SubgraphIndexingStatus {
+    chains: [ChainIndexingStatus!]!
+    entityCount: BigInt!
+    "If the subgraph has failed, this is the error caused it"
+    fatalError: SubgraphError
+    health: Health!
+    node: String
+    "Sorted from first to last, limited to first 1000"
+    nonFatalErrors: [SubgraphError!]!
+    subgraph: String!
+    synced: Boolean!
+}
+
+enum Feature {
+    fullTextSearch
+    grafting
+    ipfsOnEthereumContracts
+    nonFatalErrors
+}
+
+enum Health {
+    "Subgraph halted due to errors"
+    failed
+    "Subgraph syncing normally"
+    healthy
+    "Subgraph syncing but with errors"
+    unhealthy
+}
+
+scalar BigInt
+
+scalar Bytes
+
+scalar Date
+
+scalar JSONObject
+
+input BlockInput {
+    hash: Bytes!
+    number: BigInt!
+}
+
+input ProofOfIndexingRequest {
+    block: BlockInput!
+    deployment: String!
+}
+
+input PublicProofOfIndexingRequest {
+    blockNumber: BigInt!
+    deployment: String!
+}

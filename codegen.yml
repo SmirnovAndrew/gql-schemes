@@ -1,0 +1,12 @@
+overwrite: true
+schema:
+  - "./client.graphql"
+  - "./blockClient.graphql"
+  - "./health.graphql"
+documents: "./src/requests/*.gql"
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"

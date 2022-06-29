@@ -1,0 +1,16 @@
+{
+  "name": "Untitled GraphQL Schema",
+  "schemaPath": "src/schemes/schema.graphql",
+  "includes" : ["./src/**/*.graphql"],
+  "extensions": {
+    "endpoints": {
+      "Get All": {
+        "url": "http://localhost:4000/graphql/",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": true
+      }
+    }
+  }
+}
